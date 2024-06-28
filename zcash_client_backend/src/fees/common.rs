@@ -3,7 +3,7 @@ use zcash_primitives::{
     memo::MemoBytes,
     transaction::{
         components::amount::{BalanceError, NonNegativeAmount},
-        fees::{transparent, FeeRule},
+        fees::{transparent, zip317::MARGINAL_FEE, FeeRule},
     },
 };
 
@@ -155,7 +155,10 @@ where
         orchard,
     )?;
     let (change_pool, sapling_change, _orchard_change) =
-        single_change_output_policy::<NoteRefT, F, E>(&net_flows, _fallback_change_pool)?;
+        dbg!(single_change_output_policy::<NoteRefT, F, E>(
+            &net_flows,
+            _fallback_change_pool
+        )?);
 
     let sapling_input_count = sapling
         .bundle_type()
@@ -164,8 +167,8 @@ where
     let sapling_output_count = sapling
         .bundle_type()
         .num_outputs(
-            sapling.inputs().len(),
-            sapling.outputs().len() + sapling_change,
+            dbg!(sapling.inputs().len()),
+            dbg!(sapling.outputs().len() + sapling_change),
         )
         .map_err(ChangeError::BundleError)?;
 
@@ -173,8 +176,8 @@ where
     let orchard_action_count = orchard
         .bundle_type()
         .num_actions(
-            orchard.inputs().len(),
-            orchard.outputs().len() + _orchard_change,
+            dbg!(orchard.inputs().len()),
+            dbg!(orchard.outputs().len() + _orchard_change),
         )
         .map_err(ChangeError::BundleError)?;
     #[cfg(not(feature = "orchard"))]
@@ -186,9 +189,9 @@ where
             target_height,
             transparent_inputs,
             transparent_outputs,
-            sapling_input_count,
-            sapling_output_count,
-            orchard_action_count,
+            dbg!(sapling_input_count),
+            dbg!(sapling_output_count),
+            dbg!(orchard_action_count),
         )
         .map_err(|fee_error| ChangeError::StrategyError(E::from(fee_error)))?;
 
@@ -203,7 +206,10 @@ where
     })?;
 
     if proposed_change.is_zero() {
-        TransactionBalance::new(vec![], fee_amount).map_err(|_| overflow())
+        Err(ChangeError::InsufficientFunds {
+            available: total_in,
+            required: (total_in + MARGINAL_FEE).ok_or_else(overflow)?,
+        })
     } else {
         let dust_threshold = dust_output_policy
             .dust_threshold()
