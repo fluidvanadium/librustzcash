@@ -306,6 +306,10 @@ impl ZcashAddress {
     pub fn kind(&self) -> &AddressKind {
         &self.kind
     }
+
+    pub fn net(&self) -> &Network {
+        &self.net
+    }
 }
 
 #[cfg(feature = "test-dependencies")]
