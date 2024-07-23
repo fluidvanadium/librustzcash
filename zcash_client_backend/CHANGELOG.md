@@ -7,11 +7,11 @@ and this library adheres to Rust's notion of
 
 ## [Zingo]
 - replace create_proposed_transaction with `calculate_proposed_transaction`
-  - dont try to write the calculated transaction to wallet, that will be handled later
-  - ignore collecting any transaction metadata
-  - handle usk differently
-- modify change algorithm
+  - skip writing the calculated transaction to wallet, that will be handled by the caller
+  - delete all references to transaction metadata
+  - added override_sapling_change_address shim
 - added display for NoteId
+- pub field getters for ZcashAddress
 
 ### Added
 - `zcash_client_backend::data_api`:
