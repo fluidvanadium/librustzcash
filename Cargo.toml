@@ -60,7 +60,7 @@ orchard = { version = "0.8.0", default-features = false }
 pasta_curves = "0.5"
 
 # - Transparent
-hdwallet = "0.4"
+hdwallet = { git = "https://github.com/fluidvanadium/hdwallet.git", branch = "master" }
 ripemd = "0.1"
 secp256k1 = "0.27"
 
