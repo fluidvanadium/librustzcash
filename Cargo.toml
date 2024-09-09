@@ -16,7 +16,7 @@ members = [
 
 [workspace.package]
 edition = "2021"
-rust-version = "1.65"
+rust-version = "1.77"
 repository = "https://github.com/zcash/librustzcash"
 license = "MIT OR Apache-2.0"
 categories = ["cryptography::cryptocurrencies"]
@@ -93,9 +93,9 @@ maybe-rayon = { version = "0.1.0", default-features = false }
 rayon = "1.5"
 
 # Protobuf and gRPC
-prost = "0.12"
-tonic = { version = "0.10", default-features = false }
-tonic-build = { version = "0.10", default-features = false }
+prost = "0.13"
+tonic = { version = "0.12", default-features = false }
+tonic-build = { version = "0.12", default-features = false }
 
 # Secret management
 secrecy = "0.8"
