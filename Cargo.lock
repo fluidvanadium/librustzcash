@@ -959,7 +959,7 @@ dependencies = [
 [[package]]
 name = "hdwallet"
 version = "0.4.2"
-source = "git+https://github.com/fluidvanadium/hdwallet.git?branch=master#fca2d8f5d93bfd4801a1ec5ba96f7a02d4c12eb7"
+source = "git+https://github.com/fluidvanadium/hdwallet.git?tag=update_secp256k1_to_0.27.0#fca2d8f5d93bfd4801a1ec5ba96f7a02d4c12eb7"
 dependencies = [
  "lazy_static",
  "rand_core",
